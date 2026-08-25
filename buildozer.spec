@@ -9,9 +9,11 @@ requirements = python3,kivy,plyer
 orientation = portrait
 fullscreen = 0
 android.permissions = INTERNET,ACCESS_FINE_LOCATION
+android.accept_sdk_license = True
 android.api = 33
 android.minapi = 21
-android.ndk_path = 
+android.ndk = 25b
+
 
 [buildozer]
 log_level = 2
