@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout Code
@@ -39,9 +39,12 @@ jobs:
           python -m pip install --upgrade pip setuptools wheel
           pip install buildozer "cython<3.0.0"
 
-      - name: Build APK with Verbose Output
+      - name: Pre-accept Android SDK Licenses & Build
         run: |
-          APP_ANDROID_ACCEPT_SDK_LICENSES=1 buildozer -v android debug
+          mkdir -p ~/.buildozer/android/platform/android-sdk/licenses
+          echo -e "\n89330d2226042085a108fc877da80370119fc2fd\nd56f5187479451eabf01fb78af6dfcb131a6481e\n24333f8a6378b6f4e173269d3a79d31358a1662d" > ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
+          echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-preview-license
+          yes | buildozer -v android debug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
